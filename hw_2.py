@@ -13,3 +13,42 @@ while l.count(a) <= 1:
   else:
     print('Все уникальные')
 print('Есть повторяющиеся')
+
+"""
+Задача 2. При заданном целом числе n посчитайте n + nn + nnn.
+"""
+
+n = 5
+if type(n) == int:
+  s = n * 3 + n * 10 * 2 + n * 100
+  print(s)
+else :
+  print('Incorrect')
+
+  """
+  Задача 3. Напишите программу, которая принимает два списка и выводит все элементы первого, которых нет во втором.
+  """
+
+  list_1 = [3, 'a', 62, 19, 'c', 'd', 9, 'x', 87, 18, 15, 95, 'o', 81, 1, 'r', 97, 53, 9, 66, 15, 34, 72, 68, 85, 17,
+            84, 36, 16]
+  list_2 = [9, 47, 78, 54, 92, 63, 59, 89, 96, 47, 95, 29, 'c', 20, 4, 28, 10, 9, 45, 40, 67, 3, 62, 62, 14, 39, 46, 9,
+            63, 87, 31, 15, 67, 17, 81, 1, 91, 97, 53, 9, 66, 15, 34, 72, 68, 85, 20, 84, 36, 49]
+  n_list_1 = len(list_1)
+  y = 0
+  while y < n_list_1:
+    index_x = list_1[y]
+    if list_2.count(index_x) < 1:
+      print(index_x)
+      y += 1
+    else:
+      y += 1
+
+  """
+  Задача 4. Посчитайте, сколько раз символ встречается в строке.
+  """
+
+  s = 'asdfhklasdfkljsadlfkjlasghasudyueiwhfkjdsf,d.a.,,klsdhfjm.m.,mklsjdfkjhsadjfghjasdfgjhsdf'
+  list_s = tuple(s)
+  symbol = input('Введите символ:')
+  print(list_s.count(symbol))
+  
