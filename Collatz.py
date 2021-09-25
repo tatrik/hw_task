@@ -11,22 +11,34 @@
 Максимальная скорсть работы программы среди всех слушателей.
 """
 
-d = {}
+from time import time
+rez = {}
 
 
-def get_collatz(n, qty):
+def f(d=dict, n=int):
     if n == 1:
-        return qty
+        return 1
     elif n % 2 == 0:
-        return get_collatz(n//2, qty+1)
+        n = n / 2
     else:
-        return get_collatz(3*n+1, qty+1)
+        n = n * 3 + 1
+    if n in d:
+        return 1 + d[n]
+    else:
+        return 1 + f(d, n)
 
 
-n = 0
-a = 0
-for i in range(13, 1000000):
-    c = get_collatz(i, 1)
-    if c > n:
-      a, n = i, c
-print(a, n)
+a = time()
+for i in range(2, 1000000):
+    rez[i] = f(rez, i)
+max_val = 0
+for k, v in rez.items():
+    if v > max_val:
+        max_val = v
+        max_key = k
+
+b = time()
+c = round(b - a, 2)
+print(f'Число с наибольшей последовательностью: {max_key}')
+print(f'Длина последовательности: {max_val}')
+print(f'Скорость работы программы: {c} секунды')
