@@ -20,30 +20,31 @@ atm_copacity = {
     '10': 60,
     '20': 55,
     '50': 53,
-    '100': 3,
+    '100': 45,
 }
-rez = {}
+rez = dict.fromkeys([5, 10, 20, 50, 100], 0)
 
 
 def count(s, kwargs):
-    keys_ATM = list((int(k) for k in kwargs.keys()))
-    keys_ATM.reverse()
-    for i in keys_ATM:
-        n = s // i
-        if n <= kwargs.get(str(i)):
-            rez[i] = n
-            kwargs[str(i)] -= n
-            s -= i * n
-        else:
-            n = kwargs.get(str(i))
-            rez[i] = n
-            kwargs[str(i)] -= n
-            s -= i * n
-    return rez
+    while s > 0:
+        keys_ATM = list((int(k) for k in kwargs.keys()))
+        keys_ATM.reverse()
+        n = 1
+        for i in keys_ATM:
+            if s >= i:
+                if kwargs.get(str(i)):
+                    rez[i] += n
+                    kwargs[str(i)] -= n
+                    s -= i
+                else:
+                    continue
+            else:
+                continue
+    return print(f'give out: {rez} \nBalance at ATM {atm_copacity}')
 
 
 def withdrawal(s):
-    return print(count(s, atm_copacity))
+    return count(s, atm_copacity)
 
 
 withdrawal(485)
