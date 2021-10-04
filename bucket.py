@@ -1,80 +1,61 @@
-print('''Команды:
-  1 - Наполнить ведро 5л
-  2 - Наполнить ведро 3л
-  3 - Вылить из ведра 5л
-  4 - Вылить из ведра 3л
-  5 - Перелить из 5-ти л в 3-х л
-  6 -Перелить из 3-х л в 5-ти л''')
-V5 = 0
-V3 = 0
-n = 0
-while V5 != 4:
-    print('\nВ 5-тилитровом ведре сейчас', V5, 'л')
-    print('В 3-хлитровом ведре сейчас', V3, 'л')
-    print()
-    a = input('Введите команду:')
-    if a == '1':
-        V5 = 5
-        n += 1
-    elif a == '2':
-        V3 = 3
-        n += 1
-    elif a == '3':
-        V5 = 0
-        n += 1
-    elif a == '4':
-        V3 = 0
-        n += 1
-    elif a == '5':
-        for i in (0, 1, 2, 3, 4, 5):
-            if V5 == 0 and V5 == i:
-                n += 1
-                break
-            elif V5 > 0 and i > 0:
-                if V5 == i:
-                    for j in (0, 1, 2, 3):
-                        if V3 == j and j != 3:
-                            VS = V5 + V3
-                            if VS > 3:
-                                V3 = 3
-                                V5 = VS - V3
-                                n += 1
-                                break
-                            elif VS <= 3:
-                                V3 = VS
-                                V5 = 0
-                                n += 1
-                                break
-                        elif V3 == j and j == 3:
-                            print('Ведро 3л полное. Выберите другое действие')
-                            break
-    elif a == '6':
-        for k in (0, 1, 2, 3):
-            if V3 == 0 and V3 == k:
-                n += 1
-                break
-            elif V3 > 0 and k > 0:
-                if V3 == k:
-                    for m in (0, 1, 2, 3, 4, 5):
-                        if V5 == m and m != 5:
-                            VS = V5 + V3
-                            if VS > 5:
-                                V5 = 5
-                                V3 = VS - V5
-                                n += 1
-                                break
-                            elif VS <= 5:
-                                V5 = VS
-                                V3 = 0
-                                n += 1
-                                break
-                        elif V5 == m and m == 5:
-                            print('Ведро 5л полное. Выберите другое действие')
-                            n += 1
-    else:
-        print('Неверное значение!!! Попробуйте снова.')
-        continue
+"""
+Команды: (x - объём ведра, может принимать значение 3 или 5)
+bx in- наполнить ведро
+bx out - вылить из ведра
+bx move - перелить из bx
+"""
 
-print('\nВы справились \n')
-print('В 5-тилитровом ведре сейчас', V5, 'л \n')
-print('Ваше количество ходов =', n)
+
+class Bucket:
+
+    def __init__(self, lit):
+        self.max_val = lit
+        self.__val = 0
+
+    @property
+    def bucket(self):
+        return self.__val
+
+    @bucket.setter
+    def bucket(self, val):
+        if val <= self.max_val:
+            self.__val = val
+            return 0
+        else:
+            self.__val = self.max_val
+            return val - self.max_val
+
+
+b5 = Bucket(5)
+b3 = Bucket(3)
+n = 0
+
+
+def action(buck, act):
+    if buck == 'b5':
+        if act == 'in':
+            b5.bucket = 5
+        elif act == 'out':
+            b5.bucket = 0
+        elif act == 'move':
+            b_s = b5.bucket + b3.bucket
+            b3.bucket += b5.bucket
+            b5.bucket = b_s - b3.bucket
+    elif buck == 'b3':
+        if act == 'in':
+            b3.bucket = 3
+        elif act == 'out':
+            b3.bucket = 0
+        elif act == 'move':
+            b_s = b5.bucket + b3.bucket
+            b5.bucket += b3.bucket
+            b3.bucket = b_s - b5.bucket
+
+
+while b5.bucket != 4:
+    a = input('Enter the action: ')
+    buck, act = a.split()
+    action(buck, act)
+    n += 1
+    print(f'b5 = {b5.bucket}; b3 = {b3.bucket}; ходы = {n}')
+    
